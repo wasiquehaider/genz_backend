@@ -1,16 +1,16 @@
-const express = require("express");
-const cors = require("cors");
-const dotenv = require("dotenv");
-const db = require("./config/database");
-const authRoutes = require("./routes/auth.route");
-const moviesRoutes = require("./routes/movies.route");
-const allmoviesRoutes = require("./routes/allmovies.route");
-const foodRoutes = require("./routes/food.route");
-const movieThRoute = require("./routes/moviesth.route");
-const uploadRoutes = require("./routes/upload.route");
-const booklocationRoutes = require("./routes/booklocation.route");
-const bookmovielocationRoutes = require("./routes/movieslocation.route");
-const path = require("path");
+const express = require('express');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const db = require('./config/database');
+const authRoutes = require('./routes/auth.route');
+const moviesRoutes = require('./routes/movies.route');
+const allmoviesRoutes = require('./routes/allmovies.route');
+const foodRoutes = require('./routes/food.route');
+const movieThRoute = require('./routes/moviesth.route');
+const uploadRoutes = require('./routes/upload.route');
+const booklocationRoutes = require('./routes/booklocation.route');
+const bookmovielocationRoutes = require('./routes/movieslocation.route');
+const path = require('path');
 
 dotenv.config();
 
@@ -21,24 +21,30 @@ app.use(express.json());
 // Check if the database connection is successful
 db.connect((err) => {
   if (err) {
-    console.error("Error connecting to MySQL:", err.message);
+    console.error('Error connecting to MySQL:', err.message);
     process.exit(1);
   }
-  console.log("Connected to MySQL database.");
+  console.log('Connected to MySQL database.');
+});
+
+// Test route
+
+app.get('/test', (req, res) => {
+  res.json({ message: 'Test route working!' });
 });
 
 // Serve static files (uploaded images)
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Routes
-app.use("/api/auth", authRoutes);
-app.use("/api/trending-movies", moviesRoutes);
-app.use("/api/all-movies", allmoviesRoutes);
-app.use("/api/all-food", foodRoutes);
-app.use("/api/movieth", movieThRoute);
-app.use("/api/booking", booklocationRoutes);
-app.use("/api/booking-movie-location", bookmovielocationRoutes );
-app.use("/api", uploadRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/trending-movies', moviesRoutes);
+app.use('/api/all-movies', allmoviesRoutes);
+app.use('/api/all-food', foodRoutes);
+app.use('/api/movieth', movieThRoute);
+app.use('/api/booking', booklocationRoutes);
+app.use('/api/booking-movie-location', bookmovielocationRoutes);
+app.use('/api', uploadRoutes);
 
 // Booking Route
 // app.post("/api/booking", async (req, res) => {
@@ -62,12 +68,10 @@ app.use("/api", uploadRoutes);
 //   }
 // });
 
-app.get("*" , () => {
-  
-})
+app.get('*', () => {});
 
 // Start the server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, "0.0.0.0", () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
